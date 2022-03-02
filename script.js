@@ -12,14 +12,43 @@ const editName =  document.getElementById('editName');
 const submitEditButton = document.getElementById('submitEditButton');
 
 
-const products = ["Banan", "Mugg", "Penna"];
+class Product {
+    constructor(namn, price, color) {
+      this.namn = namn;
+      this.price = price;
+      this.color = color;
+    }
+  }
+
+var product1 = new Product("Banan",12,"yellow");
+var product2 = new Product("Ällpe",13,"yellow1");
+var product3 = new Product("Mugg",11,"yellow2");
+
+product3.hej = "1234";
+console.log(product3);
+
+// Vi måste säkerställa att när man skapar objekt
+// av viss "typ" så ska alla objekt ha samma properties
+
+const products = [product1, product2, product3];
 
 
-function createNewTr(namn){
+
+function createNewTr(product){
     let tr = document.createElement('tr');
     let td1 = document.createElement('td');
     tr.appendChild(td1);
-    td1.innerText = namn;
+    td1.innerText = product.namn;
+
+    let td11 = document.createElement('td');
+    tr.appendChild(td11);
+    td11.innerText = product.price;
+
+    let  td111 = document.createElement('td');
+    tr.appendChild(td111);
+    td111.innerText = product.color;
+
+
 
     let td2 = document.createElement('td');
     tr.appendChild(td2);
@@ -35,11 +64,17 @@ function createNewTr(namn){
     return tr;
 }
 
-for(let i=0; i < products.length; i++ ){
-    let namn = products[i];
-    let tr = createNewTr(namn);
-    productTableBody.appendChild(tr);
-}
+
+products.forEach( (item)=>{
+     let tr = createNewTr(item);
+     productTableBody.appendChild(tr);
+}  );
+
+// for(let i=0; i < products.length; i++ ){
+//     let namn = products[i];
+//     let tr = createNewTr(namn);
+//     productTableBody.appendChild(tr);
+// }
 
 
 
@@ -79,9 +114,12 @@ listLink.addEventListener("click", ()=>{
 
 submitNewButton.addEventListener("click", ()=>{
     let nyttNamn = newName.value;
-    products.push(nyttNamn);
 
-    let tr = createNewTr(nyttNamn);
+    let prod = new Product(nyttNamn,122,"1yellow");    
+
+    products.push(prod);
+
+    let tr = createNewTr(prod);
     productTableBody.appendChild(tr);
 
     sectionList.style.display = "block";
