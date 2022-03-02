@@ -25,7 +25,7 @@ function createNewTr(namn){
     tr.appendChild(td2);
     td2.innerHTML = '<i class="bi bi-pencil-square"></i>'
 
-    td2.addEventListener("click", (namn)=>{
+    td2.addEventListener("click", ()=>{
         editName.value = namn;
         sectionEdit.style.display = "block";
         sectionList.style.display = "none";
