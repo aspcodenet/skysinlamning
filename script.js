@@ -16,6 +16,11 @@ function createNewTr(namn){
     let td1 = document.createElement('td');
     tr.appendChild(td1);
     td1.innerText = namn;
+
+    let td2 = document.createElement('td');
+    tr.appendChild(td2);
+    td2.innerHTML = '<i class="bi bi-pencil-square"></i>'
+
     return tr;
 }
 
