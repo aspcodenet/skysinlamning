@@ -13,16 +13,16 @@ const submitEditButton = document.getElementById('submitEditButton');
 
 
 class Product {
-    constructor(namn, price, color) {
+    constructor(namn, price, category) {
       this.namn = namn;
       this.price = price;
-      this.color = color;
+      this.category = category;
     }
   }
 
-var product1 = new Product("Banan",12,"yellow");
-var product2 = new Product("Ällpe",13,"yellow1");
-var product3 = new Product("Mugg",11,"yellow2");
+var product1 = new Product("Banan",12,"Frukt");
+var product2 = new Product("Äpple",13,"Frukt");
+var product3 = new Product("Mugg",11,"Köksartiklar");
 
 product3.hej = "1234";
 console.log(product3);
@@ -46,7 +46,7 @@ function createNewTr(product){
 
     let  td111 = document.createElement('td');
     tr.appendChild(td111);
-    td111.innerText = product.color;
+    td111.innerText = product.category;
 
 
 
@@ -55,7 +55,7 @@ function createNewTr(product){
     td2.innerHTML = '<i class="bi bi-pencil-square"></i>'
 
     td2.addEventListener("click", ()=>{
-        editName.value = namn;
+        editName.value = product.namn;
         sectionEdit.style.display = "block";
         sectionList.style.display = "none";
         sectionNew.style.display = "none";
