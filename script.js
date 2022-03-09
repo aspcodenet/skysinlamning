@@ -9,6 +9,8 @@ const productTableBody =  document.getElementById('productTableBody');
 const submitNewButton = document.getElementById('submitNewButton');
 const newName =  document.getElementById('newName');
 const editName =  document.getElementById('editName');
+const editPrice =  document.getElementById('editPrice');
+const editCategory =  document.getElementById('editCategory');
 const submitEditButton = document.getElementById('submitEditButton');
 
 
@@ -56,6 +58,8 @@ function createNewTr(product){
 
     td2.addEventListener("click", ()=>{
         editName.value = product.namn;
+        editPrice.value = product.price;
+        editCategory.value = product.category;
         sectionEdit.style.display = "block";
         sectionList.style.display = "none";
         sectionNew.style.display = "none";
@@ -64,32 +68,15 @@ function createNewTr(product){
     return tr;
 }
 
+function refreshItems(items){
+    productTableBody.innerHTML='';
+    items.forEach( (item)=>{
+        let tr = createNewTr(item);
+        productTableBody.appendChild(tr);
+   }  );
+}
 
-products.forEach( (item)=>{
-     let tr = createNewTr(item);
-     productTableBody.appendChild(tr);
-}  );
-
-// for(let i=0; i < products.length; i++ ){
-//     let namn = products[i];
-//     let tr = createNewTr(namn);
-//     productTableBody.appendChild(tr);
-// }
-
-
-
-
-
-//loopa product - för varje 
-//          skapa ett TR element
-//              skapa ett TD element
-//                  td:n ska ha prodyctnamnet som innertext
-//          adda TR till productTableBody
-
-
-
-
-console.log(newLink);
+refreshItems(products);
 
 newLink.addEventListener("click", ()=>{
     newName.value = '';
@@ -103,13 +90,6 @@ listLink.addEventListener("click", ()=>{
     sectionList.style.display = "block";
     sectionNew.style.display = "none";
 });
-
-// addEventListener("click", ()=>{
-//     sectionEdit.style.display = "block";
-//     sectionList.style.display = "none";
-//     sectionNew.style.display = "none";
-// });
-
 
 
 submitNewButton.addEventListener("click", ()=>{
