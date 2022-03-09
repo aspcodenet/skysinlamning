@@ -8,6 +8,8 @@ const listLink = document.getElementById('listLink');
 const productTableBody =  document.getElementById('productTableBody');
 const submitNewButton = document.getElementById('submitNewButton');
 const newName =  document.getElementById('newName');
+const newPrice =  document.getElementById('newPrice');
+const newCategory =  document.getElementById('newCategory');
 const editName =  document.getElementById('editName');
 const editPrice =  document.getElementById('editPrice');
 const editCategory =  document.getElementById('editCategory');
@@ -26,16 +28,31 @@ class Product {
 
 const products = [];
 
-fetch('https://fakestoreapi.com/products')
-  .then(response => response.json())
-  .then(data => { data.forEach((item)=>{
-      const p = new Product(item.id, item.title, item.price, item.category );
-      products.push(p)
-        });
-        console.log(products);
-        refreshItems(products);
+function fetchAll()
+{
+    const request = {
+        headers: {
+            'Content-Type': 'application/json' 
+          },
+          method: 'GET',
     }
-     );
+    
+    fetch('https://jsonplaceholder.typicode.com/todos', request )
+        .then(response => response.json())
+        .then(data => {
+            data.forEach((item) => {
+                const p = new Product(item.id, 
+                    item.title, 
+                    item.userId,
+                     "Hejsan");
+                products.push(p)
+            });
+            console.log(products);
+            refreshItems(products);
+        }
+        );
+    
+    }
 
 //
 
@@ -83,7 +100,7 @@ function refreshItems(items){
    }  );
 }
 
-refreshItems(products);
+fetchAll();
 
 newLink.addEventListener("click", ()=>{
     newName.value = '';
@@ -97,6 +114,25 @@ submitEditButton.addEventListener("click",()=>{
     currentlyEditingProduct.namn = editName.value;
     currentlyEditingProduct.price = editPrice.value;
     currentlyEditingProduct.category = editCategory.value;
+
+
+    const request =  {
+        method: 'PUT',
+        body: JSON.stringify({
+          id: currentlyEditingProduct.id,
+          title: editName.value,
+          userId: editPrice.value,
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      };
+
+    fetch('https://jsonplaceholder.typicode.com/posts/'
+            + currentlyEditingProduct.id, request    )
+        .then((response) => response.json())
+        .then((json) => console.log(json))    
+
     //refreshitems
     refreshItems(products);
     sectionList.style.display = "block";
@@ -113,18 +149,30 @@ listLink.addEventListener("click", ()=>{
 
 
 submitNewButton.addEventListener("click", ()=>{
-    let nyttNamn = newName.value;
+    const nyaObjektet = {
+        title: newName.value,
+        userId: newPrice.value,
+      };
 
-    let prod = new Product(nyttNamn,122,"1yellow");    
+    const request = {
+        method: 'POST',
+        body: JSON.stringify(nyaObjektet),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      };
 
-    products.push(prod);
+    fetch('https://jsonplaceholder.typicode.com/todos', request)
+        .then((response) => response.json())
+        .then((json) => fetchAll());    
 
-    let tr = createNewTr(prod);
-    productTableBody.appendChild(tr);
 
-    sectionList.style.display = "block";
-    sectionNew.style.display = "none";
-    sectionEdit.style.display = "none";
+
+
+
+        sectionList.style.display = "block";
+        sectionNew.style.display = "none";
+        sectionEdit.style.display = "none";
 });
 
 
