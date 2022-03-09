@@ -15,24 +15,29 @@ const submitEditButton = document.getElementById('submitEditButton');
 
 
 class Product {
-    constructor(namn, price, category) {
+    constructor(id, namn, price, category) {
+      this.id = id;
       this.namn = namn;
       this.price = price;
       this.category = category;
     }
   }
 
-var product1 = new Product("Banan",12,"Frukt");
-var product2 = new Product("Äpple",13,"Frukt");
-var product3 = new Product("Mugg",11,"Köksartiklar");
 
-product3.hej = "1234";
-console.log(product3);
+const products = [];
 
-// Vi måste säkerställa att när man skapar objekt
-// av viss "typ" så ska alla objekt ha samma properties
+fetch('https://fakestoreapi.com/products')
+  .then(response => response.json())
+  .then(data => { data.forEach((item)=>{
+      const p = new Product(item.id, item.title, item.price, item.category );
+      products.push(p)
+        });
+        console.log(products);
+        refreshItems(products);
+    }
+     );
 
-const products = [product1, product2, product3];
+//
 
 
 let currentlyEditingProduct = null;
