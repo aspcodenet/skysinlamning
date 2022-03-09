@@ -14,7 +14,7 @@ const editName =  document.getElementById('editName');
 const editPrice =  document.getElementById('editPrice');
 const editCategory =  document.getElementById('editCategory');
 const submitEditButton = document.getElementById('submitEditButton');
-
+const search = document.getElementById('search')
 
 class Product {
     constructor(id, namn, price, category) {
@@ -109,6 +109,25 @@ newLink.addEventListener("click", ()=>{
     sectionNew.style.display = "block";
 });
 
+
+search.addEventListener("keyup",()=>{
+    //ta products - filtera på search.value skriv till ny array
+    //C#
+    //var filteredProducts = products.Where(p=>p.namn.contains(search.value));
+
+
+    let filteredProducts = products.filter(p => {
+        if(Number.isInteger(+search.value))
+            return p.price == search.value;
+        return p.namn.toLowerCase()
+                .includes(search.value.toLowerCase())
+    }
+    );
+
+    refreshItems(filteredProducts)
+    //rendera ut den arrayen
+});
+
 submitEditButton.addEventListener("click",()=>{
     // mappa inputs editName, editprice -> objektet
     currentlyEditingProduct.namn = editName.value;
@@ -128,11 +147,11 @@ submitEditButton.addEventListener("click",()=>{
         },
       };
 
-    fetch('https://jsonplaceholder.typicode.com/posts/'
+    fetch('https://jsonplaceholder.typicode.com/todos/'
             + currentlyEditingProduct.id, request    )
-        .then((response) => response.json())
-        .then((json) => console.log(json))    
-
+            .then((response) => response.json())
+            .then((json) => console.log(json))    
+    
     //refreshitems
     refreshItems(products);
     sectionList.style.display = "block";
