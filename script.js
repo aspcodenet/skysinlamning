@@ -117,8 +117,12 @@ search.addEventListener("keyup",()=>{
 
 
     let filteredProducts = products.filter(p => {
+        if(!search.value) return true;
+
         if(Number.isInteger(+search.value))
             return p.price == search.value;
+
+
         return p.namn.toLowerCase()
                 .includes(search.value.toLowerCase())
     }
