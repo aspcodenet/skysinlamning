@@ -35,6 +35,7 @@ console.log(product3);
 const products = [product1, product2, product3];
 
 
+let currentlyEditingProduct = null;
 
 function createNewTr(product){
     let tr = document.createElement('tr');
@@ -57,6 +58,7 @@ function createNewTr(product){
     td2.innerHTML = '<i class="bi bi-pencil-square"></i>'
 
     td2.addEventListener("click", ()=>{
+        currentlyEditingProduct = product;
         editName.value = product.namn;
         editPrice.value = product.price;
         editCategory.value = product.category;
@@ -83,6 +85,19 @@ newLink.addEventListener("click", ()=>{
     sectionList.style.display = "none";
     sectionEdit.style.display = "none";
     sectionNew.style.display = "block";
+});
+
+submitEditButton.addEventListener("click",()=>{
+    // mappa inputs editName, editprice -> objektet
+    currentlyEditingProduct.namn = editName.value;
+    currentlyEditingProduct.price = editPrice.value;
+    currentlyEditingProduct.category = editCategory.value;
+    //refreshitems
+    refreshItems(products);
+    sectionList.style.display = "block";
+    sectionEdit.style.display = "none";
+    sectionNew.style.display = "none";
+
 });
 
 listLink.addEventListener("click", ()=>{
